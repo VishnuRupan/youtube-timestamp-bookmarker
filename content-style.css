@@ -1,0 +1,13 @@
+.yt-bookmark-container {
+    width: 20px;
+    height: 20px;
+    margin: 1rem;
+    cursor: pointer;
+}
+
+.yt-bookmark-container > img:hover{
+    transform: scale(1.05);
+}
+.yt-bookmark-container > img:active{
+    transform: scale(0.8);
+}

@@ -1,0 +1,61 @@
+{
+  "name": "Youtube Timestamp Bookmarker",
+  "description": "Bookmark the timestamp of a youtube video to watch later",
+  "version": "1.0",
+  "manifest_version": 3,
+  "background": {
+    "service_worker": "background.js"
+  },
+  "permissions": [
+    "storage",
+    "activeTab",
+    "scripting",
+    "tabs",
+    "webNavigation"
+  ],
+  "action": {
+    "default_popup": "popup.html",
+    "default_icon": {
+      "16": "/images/get_started16.png",
+      "32": "/images/get_started32.png",
+      "48": "/images/get_started48.png",
+      "128": "/images/get_started128.png"
+    }
+  },
+  "icons": {
+    "16": "/images/get_started16.png",
+    "32": "/images/get_started32.png",
+    "48": "/images/get_started48.png",
+    "128": "/images/get_started128.png"
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "*://youtube.com/*",
+        "*://www.youtube.com/*",
+        "*://m.youtube.com/*"
+      ],
+      "js": [
+        "options.js"
+      ],
+      "css": [
+        "content-style.css"
+      ]
+    }
+  ],
+  "externally_connectable": {
+    "matches": [
+      "*://*.youtube.com/*"
+    ]
+  },
+  "web_accessible_resources": [
+    {
+      "resources": [
+        "/images/bookmark.svg"
+      ],
+      "matches": [
+        "<all_urls>"
+      ]
+    }
+  ]
+}

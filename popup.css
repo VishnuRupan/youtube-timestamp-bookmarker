@@ -1,0 +1,14 @@
+html,body {
+  padding: 0rem;
+  margin: 0rem;
+  box-sizing: border-box;
+  background: rgb(30, 30, 30);
+  color: white;
+  width: 20rem;
+  height: 20rem;
+  overflow-y: scroll;
+}
+
+main {
+  
+}
