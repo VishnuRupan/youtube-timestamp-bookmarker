@@ -89,31 +89,50 @@ function run() {
     });
 
 
-    function setVideoTimestamp() {
+    async function setVideoTimestamp() {
 
         let currentTime = document.querySelector('.ytp-time-current').innerHTML;
         let currentTimeSeconds = convert(currentTime) + "s";
         let currentPageUrl = window.location.href;
         let videoTitle = document.querySelectorAll("h1.ytd-video-primary-info-renderer")[0].querySelector('yt-formatted-string').innerHTML;
 
-        currentPageUrl += `&t=${currentTimeSeconds}`;
+        let urlTimestamp = `${currentPageUrl}&t=${currentTimeSeconds}`;
         console.log("Current timestap url: ", currentPageUrl);
 
-
+        // current video object
         const videoObj = {
             "title": videoTitle,
             "url": currentPageUrl,
-            "timeStamp": currentTime
+            "timeStamp": currentTime,
+            "urlTimestamp": urlTimestamp
         };
-        chrome.storage.sync.get("currentPageUrl", ({ currentPageUrl }) => {
-            console.log(currentPageUrl);
-        });
 
-        chrome.storage.sync.set({ "videoObj": [videoObj] });
+        // get video array
+        let videoArr = await chrome.storage.sync.get("videoObj");
+        console.log("Get Video Arr: ", videoArr);
 
+        if (Object.keys(videoArr).length === 0) {
+            chrome.storage.sync.set({ "videoObj": [videoObj] });
+        } else {
+
+            let flag = false;
+            for (let video of videoArr.videoObj) {
+                if (video.url === videoObj.url) {
+                    video.urlTimestamp = videoObj.urlTimestamp;
+                    video.timeStamp = videoObj.timeStamp;
+                    flag = true;
+                }
+            }
+
+            if (!flag)
+                videoArr.videoObj.push(videoObj);
+
+            chrome.storage.sync.set({ "videoObj": videoArr.videoObj });
+        }
     }
-}
 
+
+}
 
 function convert(input) {
     var parts = input.split(':'),

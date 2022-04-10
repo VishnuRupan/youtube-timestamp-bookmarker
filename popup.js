@@ -51,3 +51,75 @@
 // }
 
 
+window.addEventListener('DOMContentLoaded', async function () {
+
+  await renderVideoBookmarkList();
+
+  [...document.querySelectorAll('.remove-btn')].forEach(function (item) {
+    item.addEventListener('click', removeVideoFromList);
+  });
+
+}
+);
+
+
+chrome.storage.onChanged.addListener(async function () {
+
+  await renderVideoBookmarkList();
+
+  [...document.querySelectorAll('.remove-btn')].forEach(function (item) {
+    item.addEventListener('click', removeVideoFromList);
+  });
+});
+
+
+async function renderVideoBookmarkList(event, area) {
+  (document.querySelector('#video-list-ctn')).innerHTML = "";
+
+  let videoArr = await chrome.storage.sync.get("videoObj");
+  console.log("inside popup: ", videoArr);
+
+  let ul = document.createElement('ul');
+  ul.className = 'video-list';
+
+  for (let video of videoArr.videoObj) {
+    console.log("each video title: ", video.title);
+
+    ul.innerHTML += ` 
+    <li>
+
+      <a href="${video.urlTimestamp}" target="_blank">
+        <h2>${video.title}</h2>
+        <span>Timestamp: ${video.timeStamp}</span>
+      </a>
+        <button class="remove-btn" id=${video.url} >Remove</button>
+
+    </li>
+    `;
+
+  }
+  //document.querySelector('#video-list-ctn').innerHTML = "";
+  document.querySelector('#video-list-ctn').appendChild(ul);
+}
+
+async function removeVideoFromList(item) {
+  console.log(item.target.id);
+
+  const removeUrl = item.target.id;
+  let videoArr = await chrome.storage.sync.get("videoObj");
+
+  for (let video of videoArr.videoObj) {
+    if (video.url === removeUrl) {
+      let index = videoArr.videoObj.indexOf(video);
+      if (index > -1) {
+        videoArr.videoObj.splice(index, 1);
+      }
+      await chrome.storage.sync.set({ "videoObj": videoArr.videoObj });
+
+    }
+  }
+
+  var elem = document.getElementById(removeUrl);
+  elem.parentNode.removeChild(elem);
+
+}
