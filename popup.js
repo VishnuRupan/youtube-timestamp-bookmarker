@@ -87,12 +87,26 @@ async function renderVideoBookmarkList(event, area) {
 
     ul.innerHTML += ` 
     <li>
+          <div class="line"></div>
 
-      <a href="${video.urlTimestamp}" target="_blank">
-        <h2>${video.title}</h2>
-        <span>Timestamp: ${video.timeStamp}</span>
-      </a>
-        <button class="remove-btn" id=${video.url} >Remove</button>
+      <div class="video-item">
+        <img src="${video.thumbnail}" width=160 height=90>
+        <div class="info">
+          <a href="${video.urlTimestamp}" target="_blank">
+            <h2>${video.title}</h2>
+          </a>
+          <div class="details">
+          
+            <div><p>Timestamp: ${video.timeStamp}</p> </div>
+            
+            
+            <button class="remove-btn" id=${video.url} >REMOVE</button>
+            
+            
+            </div>
+        </div>
+      </div>
+
 
     </li>
     `;

@@ -99,12 +99,15 @@ function run() {
         let urlTimestamp = `${currentPageUrl}&t=${currentTimeSeconds}`;
         console.log("Current timestap url: ", currentPageUrl);
 
+        let thumbnail = get_youtube_thumbnail(currentPageUrl, 'medium');
+
         // current video object
         const videoObj = {
             "title": videoTitle,
             "url": currentPageUrl,
             "timeStamp": currentTime,
-            "urlTimestamp": urlTimestamp
+            "urlTimestamp": urlTimestamp,
+            "thumbnail": thumbnail
         };
 
         // get video array
@@ -141,4 +144,33 @@ function convert(input) {
     return (minutes * 60 + seconds).toFixed(0);
 }
 
+function get_youtube_thumbnail(url, quality) {
+    if (url) {
+        var video_id, thumbnail, result;
+        if (result = url.match(/youtube\.com.*(\?v=|\/embed\/)(.{11})/)) {
+            video_id = result.pop();
+        }
+        else if (result = url.match(/youtu.be\/(.{11})/)) {
+            video_id = result.pop();
+        }
 
+        if (video_id) {
+            if (typeof quality == "undefined") {
+                quality = 'high';
+            }
+
+            var quality_key = 'maxresdefault'; // Max quality
+            if (quality == 'low') {
+                quality_key = 'sddefault';
+            } else if (quality == 'medium') {
+                quality_key = 'mqdefault';
+            } else if (quality == 'high') {
+                quality_key = 'hqdefault';
+            }
+
+            var thumbnail = "http://img.youtube.com/vi/" + video_id + "/" + quality_key + ".jpg";
+            return thumbnail;
+        }
+    }
+    return false;
+}

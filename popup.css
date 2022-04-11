@@ -4,8 +4,82 @@ html,body {
   box-sizing: border-box;
   /* background: rgb(30, 30, 30);
   color: white; */
-  width: 20rem;
+  width: 40rem;
   height: 20rem;
   overflow-y: scroll;
+  overflow-x: hidden;
 }
 
+li {
+  list-style: none;
+  padding: 0.5rem 0rem;
+}
+
+ul {
+  padding-left: 1rem;
+}
+
+img {
+  margin-right: 1rem;
+}
+
+p {
+  margin: 0rem;
+}
+
+.line {
+  height: 1px;
+  background: rgb(232, 232, 232);
+  width: 80%;
+  margin: auto;
+  margin-bottom: 1rem;
+}
+
+.video-item, .info, .details {
+  display: flex;
+}
+.video-item:hover {
+  transform: scale(1.025);
+}
+
+.info {
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: flex-start;
+  margin-top: -1rem;
+}
+
+/* .btn-ctn {
+  display: flex;
+  align-items: flex-end;  
+  justify-content: flex-end;
+  padding-right: 1rem;
+  padding-top: 1rem;
+} */
+
+.details {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: nowrap;
+  width: 25rem;
+}
+
+button {
+  border: none;
+  color: white;
+  background: #dd3c2a;
+  font-size: 0.6rem;
+  font-weight: 600;
+  	border-radius: 1px;
+	box-shadow: 0 0 10px 0 rgba(0,0,0,.2);
+  padding: 0.4rem 1rem;
+  text-align: center;
+  cursor: pointer;
+}
+
+button:hover{
+    transform: scale(1.05);
+
+}
