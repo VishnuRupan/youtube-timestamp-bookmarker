@@ -1,18 +1,12 @@
 
 document.addEventListener("yt-navigate-finish", function (event) {
-
-    console.log('yt-navigate');
-
     setTimeout(run, 500);
-
-
 });
 
 function run() {
-
     // get right video menu bar
-    var menuCtn = document.getElementById("menu-container");
-    var menuCtnSpan = menuCtn.querySelector("#top-level-buttons-computed");
+    const menuCtn = document.getElementById("menu-container");
+    const menuCtnSpan = menuCtn.querySelector("#top-level-buttons-computed");
 
     // create bookmark container
     let bkmarkDiv = document.createElement('div');
@@ -25,10 +19,7 @@ function run() {
 
     menuCtnSpan.appendChild(bkmarkDiv);
 
-    console.log("on load again: ", menuCtn);
-
     bkmarkDiv.addEventListener("click", async () => {
-
         setVideoTimestamp();
     });
 
@@ -41,7 +32,6 @@ function run() {
         let videoTitle = document.querySelectorAll("h1.ytd-video-primary-info-renderer")[0].querySelector('yt-formatted-string').innerHTML;
 
         let urlTimestamp = `${currentPageUrl}&t=${currentTimeSeconds}`;
-        console.log("Current timestap url: ", currentPageUrl);
 
         let thumbnail = get_youtube_thumbnail(currentPageUrl, 'medium');
         let dateUpdated = new Date().toLocaleDateString('en-us', { weekday: "long", year: "numeric", month: "short", day: "numeric" });
@@ -59,7 +49,6 @@ function run() {
 
         // get video array
         let videoArr = await chrome.storage.sync.get("videoObj");
-        console.log("Get Video Arr: ", videoArr);
 
         if (Object.keys(videoArr).length === 0) {
             chrome.storage.sync.set({ "videoObj": [videoObj] });

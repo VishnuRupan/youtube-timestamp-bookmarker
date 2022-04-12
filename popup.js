@@ -28,13 +28,11 @@ async function renderVideoBookmarkList(event, area) {
   bkmarkImg.src = chrome.runtime.getURL("images/bookmark.svg");
 
   let videoArr = await chrome.storage.sync.get("videoObj");
-  console.log("inside popup: ", videoArr);
 
   let ul = document.createElement('ul');
   ul.className = 'video-list';
 
   for (let video of videoArr.videoObj) {
-    console.log("each video title: ", video.title);
 
     ul.innerHTML += ` 
     <li>
@@ -52,16 +50,11 @@ async function renderVideoBookmarkList(event, area) {
           <div class="details">
           
             <div><p><strong>Timestamp:</strong> ${video.timeStamp}</p> </div>
-            
-            
+          
             <button class="remove-btn" id=${video.url} >REMOVE</button>
-            
-            
             </div>
         </div>
       </div>
-
-
     </li>
     `;
 
@@ -71,7 +64,6 @@ async function renderVideoBookmarkList(event, area) {
 }
 
 async function removeVideoFromList(item) {
-  console.log(item.target.id);
 
   const removeUrl = item.target.id;
   let videoArr = await chrome.storage.sync.get("videoObj");
@@ -87,7 +79,7 @@ async function removeVideoFromList(item) {
     }
   }
 
-  var elem = document.getElementById(removeUrl);
+  let elem = document.getElementById(removeUrl);
   elem.parentNode.removeChild(elem);
 
 }
