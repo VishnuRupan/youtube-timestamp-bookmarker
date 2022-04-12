@@ -12,7 +12,7 @@ html,body {
   background: var(--background-color);
   color: var(--font-color);
   width: 40rem;
-  height: 20rem;
+  height: 30rem;
   overflow-y: scroll;
   overflow-x: hidden;
 }
