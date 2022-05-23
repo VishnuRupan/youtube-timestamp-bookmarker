@@ -23,7 +23,7 @@ window.addEventListener('DOMContentLoaded', async function () {
 
   searchInput.addEventListener('keyup', searchFilter);
   menuCtn.addEventListener('click', menuToggle);
-  //likedVideoFilter.addEventListener('click', videoLikesFilter);
+  likedVideoFilter.addEventListener('click', videoLikesFilter);
 });
 
 
@@ -125,7 +125,6 @@ async function removeVideoFromList(item) {
 }
 
 async function heartIconToggle(item) {
-  console.log('hey');
   heartIcon = item.target;
   let videoArr = (await chrome.storage.sync.get("videoObj")).videoObj;
 
@@ -185,33 +184,27 @@ async function menuToggle() {
   }
 }
 
-async function videoLikesFilter() {
-  let selectedOption = likedVideoFilter.value;
+async function videoLikesFilter(item) {
+
+  let selectedOption = item.target.value;
   let ul, li, heartIcon;
 
-  ul = document.getElementById("video-ul");
+  ul = document.querySelector(".video-ul");
+  li = ul.querySelectorAll("li");
 
-  console.log(ul);
+  if (selectedOption === "Liked") {
 
-  //   li = ul.querySelectorAll("li");
-  // 
-  //   if (selectedOption === "Liked") {
-  // 
-  //     for (i = 0; i < li.length; i++) {
-  //       heartIcon = li[i].getElementsByClassName('heart-icon')[0];
-  //       if (heartIcon.classList.contains("close")) {
-  //         li[i].style.display = "";
-  //       } else {
-  //         li[i].style.display = "none";
-  //       }
-  //     }
-  //   } else {
-  //     for (i = 0; i < li.length; i++) {
-  //       heartIcon = li[i].getElementsByClassName('heart-icon')[0];
-  // 
-  //       li[i].style.display = "";
-  //     }
-  //   }
+    for (i = 0; i < li.length; i++) {
+      heartIcon = li[i].getElementsByClassName('heart-icon')[0];
+      if (heartIcon.classList.contains("close")) li[i].style.display = "";
+      else li[i].style.display = "none";
+    }
+  } else {
+    for (i = 0; i < li.length; i++) {
+      heartIcon = li[i].getElementsByClassName('heart-icon')[0];
+      li[i].style.display = "";
+    }
+  }
 }
 
 
