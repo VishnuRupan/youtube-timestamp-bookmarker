@@ -96,7 +96,7 @@ main {
 
 nav {
   height: var(--nav-height);
-  width: calc(var(--popup-width) - 20px);
+  width: calc(var(--popup-width) - 8px);
   background: var(--bg-light);
   padding: 1rem;
   position: fixed;
@@ -105,6 +105,7 @@ nav {
 input {
   background: var(--bg-light);
 }
+
 
 ::placeholder {
   color: var(--bg-lighter);
@@ -115,26 +116,6 @@ input {
   padding: 1rem 0.5rem;
   margin-top: var(--nav-height);
 }
-
-body::-webkit-scrollbar {
-  width: 8px;
-  /* width of the entire scrollbar */
-}
-
-body::-webkit-scrollbar-track {
-  background: #252525;
-  /* color of the tracking area */
-}
-
-body::-webkit-scrollbar-thumb {
-  background-color: rgb(62, 62, 62);
-  /* color of the scroll thumb */
-  border-radius: 20px;
-  /* roundness of the scroll thumb */
-  border: 3px solid rgb(62, 62, 62);
-  /* creates padding around scroll thumb */
-}
-
 
 /*/////// Text ///////*/
 
@@ -158,6 +139,7 @@ span {
 .d-none {
   display: none;
 }
+
 
 
 
@@ -215,8 +197,6 @@ span {
   position: fixed;
   margin-top: var(--nav-height);
 }
-
-
 
 .icon-ctn {
   padding: 0rem 3rem 0rem 1.5rem;
@@ -314,7 +294,7 @@ span {
 
 
 .open-menu {
-  transform: translate(-100%, 0);
+  transform: translate(-103.5%, 0);
   transition: transform 0.5s cubic-bezier(0.77, 0.2, 0.05, 1.0);
 }
 
@@ -399,4 +379,25 @@ span {
   background: var(--bg-color);
   border: none;
   margin-right: 1rem;
+}
+
+
+
+main::-webkit-scrollbar {
+  width: 8px;
+  /* width of the entire scrollbar */
+}
+
+main::-webkit-scrollbar-track {
+  background: #000000;
+  /* color of the tracking area */
+}
+
+main::-webkit-scrollbar-thumb {
+  background-color: rgb(62, 62, 62);
+  /* color of the scroll thumb */
+  border-radius: 20px;
+  /* roundness of the scroll thumb */
+  border: 3px solid rgb(62, 62, 62);
+  /* creates padding around scroll thumb */
 }

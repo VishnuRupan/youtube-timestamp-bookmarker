@@ -1,11 +1,11 @@
 var videoHeartIcon = document.querySelectorAll(".heart-icon");
-let iconCtn = document.querySelector(".icon-ctn");
-let menuCtn = document.querySelector(".menu-ctn");
-let settingsCtn = document.querySelector("#settings");
-let searchInput = document.getElementById("search-input");
+var iconCtn = document.querySelector(".icon-ctn");
+var menuCtn = document.querySelector(".menu-ctn");
+var settingsCtn = document.querySelector("#settings");
+var searchInput = document.getElementById("search-input");
 
-let likedVideoFilter = document.getElementById('likes-select-filter');
-let dateVideoFilter = document.getElementById('date-select-filter');
+var likedVideoFilter = document.getElementById('likes-select-filter');
+var dateVideoFilter = document.getElementById('date-select-filter');
 
 
 window.addEventListener('DOMContentLoaded', async function () {
@@ -21,7 +21,8 @@ window.addEventListener('DOMContentLoaded', async function () {
     item.addEventListener('click', heartIconToggle);
   });
 
-  document.getElementById("search-input").addEventListener('keyup', searchFilter);
+  searchInput.addEventListener('keyup', searchFilter);
+  menuCtn.addEventListener('click', menuToggle);
 
 });
 
@@ -58,7 +59,7 @@ async function renderVideoBookmarkList(event, area) {
                     <img src="${video.thumbnail}" alt="">
                 </div>
                 <div class="info-ctn ctn d-column">
-                    <a href="${video.urlTimestamp}" target="_blank" class="title-url">
+                    <a href="${video.urlTimestamp}" target="_blank" class="title-url cursor">
                         <h2 class="title"> ${video.title} </h2>
                     </a>
                     <div class="video-details-ctn d-row">
@@ -83,7 +84,7 @@ async function renderVideoBookmarkList(event, area) {
                     <div class="icon heart cursor">
                         <img id="heart-icon" class="${video.heart} heart-icon" src="./images/${video.heart}-heart.svg" alt="">
                     </div>
-                    <div class="icon trashcan cursor">
+                    <div class="icon trashcan cursor remove-btn">
                         <img src="./images/trashcan.svg" alt="">
                     </div>
                 </div>
@@ -101,24 +102,24 @@ async function renderVideoBookmarkList(event, area) {
 }
 
 async function removeVideoFromList(item) {
+  console.log("hey");
+  const removeUrl = item.target.closest(".card-ctn").id;
 
-  const removeUrl = item.target.id;
-  let videoArr = await chrome.storage.sync.get("videoObj");
+  let videoArr = (await chrome.storage.sync.get("videoObj")).videoObj;
 
-  for (let video of videoArr.videoObj) {
+  for (let video of videoArr) {
     if (video.url === removeUrl) {
-      let index = videoArr.videoObj.indexOf(video);
+      let index = videoArr.indexOf(video);
       if (index > -1) {
-        videoArr.videoObj.splice(index, 1);
+        videoArr.splice(index, 1);
       }
-      await chrome.storage.sync.set({ "videoObj": videoArr.videoObj });
+      await chrome.storage.sync.set({ "videoObj": videoArr });
 
     }
   }
-
-  let elem = document.getElementById(removeUrl);
-  elem.parentNode.removeChild(elem);
-
+  // console.log(removeUrl);
+  // let elem = document.getElementById(removeUrl);
+  // elem.parentNode.removeChild(elem);
 }
 
 async function heartIconToggle(item) {
@@ -132,7 +133,6 @@ async function heartIconToggle(item) {
     videoIdx = val;
     return video.url === videoID;
   }))[0];
-
 
 
   if (heartIcon.classList.contains("open")) {
@@ -183,38 +183,23 @@ async function searchFilter() {
 }
 
 
+async function menuToggle() {
+
+  console.log('hey');
+
+  if (settingsCtn.classList.contains("close-menu")) {
+    settingsCtn.classList.add("open-menu");
+    settingsCtn.classList.remove("close-menu");
+  } else {
+    settingsCtn.classList.add("close-menu");
+    settingsCtn.classList.remove("open-menu");
+  }
+}
+
+
 
 ///////////////////////////// UPDATES /////////////////////////////
 
-
-
-
-likedVideoFilter.addEventListener("click", function () {
-  let selectedOption = likedVideoFilter.value;
-  let ul, li, heartIcon;
-
-  ul = document.getElementById("video-ul");
-
-  li = ul.getElementsByTagName("li");
-
-  if (selectedOption === "Liked") {
-
-    for (i = 0; i < li.length; i++) {
-      heartIcon = li[i].getElementsByClassName('heart-icon')[0];
-      if (heartIcon.classList.contains("close")) {
-        li[i].style.display = "";
-      } else {
-        li[i].style.display = "none";
-      }
-    }
-  } else {
-    for (i = 0; i < li.length; i++) {
-      heartIcon = li[i].getElementsByClassName('heart-icon')[0];
-
-      li[i].style.display = "";
-    }
-  }
-});
 
 
 dateVideoFilter.addEventListener("click", function () {
