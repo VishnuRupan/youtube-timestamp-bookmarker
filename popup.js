@@ -23,7 +23,7 @@ window.addEventListener('DOMContentLoaded', async function () {
 
   searchInput.addEventListener('keyup', searchFilter);
   menuCtn.addEventListener('click', menuToggle);
-
+  //likedVideoFilter.addEventListener('click', videoLikesFilter);
 });
 
 
@@ -32,8 +32,14 @@ chrome.storage.onChanged.addListener(async function () {
 
   await renderVideoBookmarkList();
 
+
   [...document.querySelectorAll('.remove-btn')].forEach(function (item) {
     item.addEventListener('click', removeVideoFromList);
+  });
+
+
+  [...document.querySelectorAll('.heart-icon')].forEach(function (item) {
+    item.addEventListener('click', heartIconToggle);
   });
 });
 
@@ -89,7 +95,9 @@ async function renderVideoBookmarkList(event, area) {
                     </div>
                 </div>
                 <div class="right-arrow-ctn ctn d-row">
+                  <a href="${video.urlTimestamp}" target="_blank" class="title-url cursor">
                     <img class="icon cursor" src="./images/right-arrow.svg" alt="">
+                  </a>
                 </div>
             </div>
         </div>
@@ -102,9 +110,7 @@ async function renderVideoBookmarkList(event, area) {
 }
 
 async function removeVideoFromList(item) {
-  console.log("hey");
   const removeUrl = item.target.closest(".card-ctn").id;
-
   let videoArr = (await chrome.storage.sync.get("videoObj")).videoObj;
 
   for (let video of videoArr) {
@@ -114,41 +120,33 @@ async function removeVideoFromList(item) {
         videoArr.splice(index, 1);
       }
       await chrome.storage.sync.set({ "videoObj": videoArr });
-
     }
   }
-  // console.log(removeUrl);
-  // let elem = document.getElementById(removeUrl);
-  // elem.parentNode.removeChild(elem);
 }
 
 async function heartIconToggle(item) {
+  console.log('hey');
   heartIcon = item.target;
   let videoArr = (await chrome.storage.sync.get("videoObj")).videoObj;
 
   let videoID = heartIcon.closest(".card-ctn").id;
-  let videoIdx;
 
-  let selectedVideoObj = (videoArr.filter((video, val) => {
-    videoIdx = val;
-    return video.url === videoID;
-  }))[0];
+  videoArr.forEach((video, val) => {
+    if (video.url === videoID) {
+      if (heartIcon.classList.contains("open")) {
+        heartIcon.src = "./images/close-heart.svg";
+        heartIcon.classList.add("close");
+        heartIcon.classList.remove("open");
+        videoArr[val].heart = "close";
+      } else {
+        heartIcon.src = "./images/open-heart.svg";
+        heartIcon.classList.add("open");
+        heartIcon.classList.remove("close");
+        videoArr[val].heart = "open";
+      }
+    }
+  });
 
-
-  if (heartIcon.classList.contains("open")) {
-    heartIcon.src = "./images/close-heart.svg";
-    heartIcon.classList.add("close");
-    heartIcon.classList.remove("open");
-    selectedVideoObj.heart = "close";
-  } else {
-    heartIcon.src = "./images/open-heart.svg";
-    heartIcon.classList.add("open");
-    heartIcon.classList.remove("close");
-    selectedVideoObj.heart = "open";
-  }
-
-  videoArr[videoIdx].heart = selectedVideoObj.heart;
-  console.log(videoArr);
   await chrome.storage.sync.set({ "videoObj": videoArr });
 
 }
@@ -160,10 +158,8 @@ async function searchFilter() {
   filter = searchInput.value.toUpperCase();
 
   ul = document.querySelector(".video-ul");
-  console.log(ul);
 
   li = ul.querySelectorAll("li");
-
 
   for (i = 0; i < li.length; i++) {
 
@@ -172,20 +168,13 @@ async function searchFilter() {
     if (!a.innerText || !a.textContent) txtValue = li[i].getElementsByTagName("h2")[0].getElementsByTagName("a")[0].textContent;
     else txtValue = a.textContent || a.innerText;;
 
-
-    if (txtValue.toUpperCase().indexOf(filter) > -1) {
-      li[i].style.display = "";
-    } else {
-      li[i].style.display = "none";
-    }
-
+    if (txtValue.toUpperCase().indexOf(filter) > -1) li[i].style.display = "";
+    else li[i].style.display = "none";
   }
 }
 
 
 async function menuToggle() {
-
-  console.log('hey');
 
   if (settingsCtn.classList.contains("close-menu")) {
     settingsCtn.classList.add("open-menu");
@@ -196,9 +185,39 @@ async function menuToggle() {
   }
 }
 
+async function videoLikesFilter() {
+  let selectedOption = likedVideoFilter.value;
+  let ul, li, heartIcon;
+
+  ul = document.getElementById("video-ul");
+
+  console.log(ul);
+
+  //   li = ul.querySelectorAll("li");
+  // 
+  //   if (selectedOption === "Liked") {
+  // 
+  //     for (i = 0; i < li.length; i++) {
+  //       heartIcon = li[i].getElementsByClassName('heart-icon')[0];
+  //       if (heartIcon.classList.contains("close")) {
+  //         li[i].style.display = "";
+  //       } else {
+  //         li[i].style.display = "none";
+  //       }
+  //     }
+  //   } else {
+  //     for (i = 0; i < li.length; i++) {
+  //       heartIcon = li[i].getElementsByClassName('heart-icon')[0];
+  // 
+  //       li[i].style.display = "";
+  //     }
+  //   }
+}
+
 
 
 ///////////////////////////// UPDATES /////////////////////////////
+
 
 
 
