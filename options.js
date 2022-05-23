@@ -25,8 +25,8 @@ function run() {
 
 
     async function setVideoTimestamp() {
-
         let currentTime = document.querySelector('.ytp-time-current').innerHTML;
+        let videoLength = document.querySelector('.ytp-time-duration').innerHTML;
         let currentTimeSeconds = convert(currentTime) + "s";
         let currentPageUrl = (window.location.href).split("&t")[0];
         let videoTitle = document.querySelectorAll("h1.ytd-video-primary-info-renderer")[0].querySelector('yt-formatted-string').innerHTML;
@@ -34,7 +34,7 @@ function run() {
         let urlTimestamp = `${currentPageUrl}&t=${currentTimeSeconds}`;
 
         let thumbnail = get_youtube_thumbnail(currentPageUrl, 'medium');
-        let dateUpdated = new Date().toLocaleDateString('en-us', { weekday: "long", year: "numeric", month: "short", day: "numeric" });
+        let dateUpdated = new Date().toLocaleDateString('en-us', { year: "numeric", month: "numeric", day: "numeric" });
 
 
         // current video object
@@ -42,9 +42,11 @@ function run() {
             "title": videoTitle,
             "url": currentPageUrl,
             "timeStamp": currentTime,
+            "videoLength": videoLength,
             "urlTimestamp": urlTimestamp,
             "thumbnail": thumbnail,
-            "dateUpdated": dateUpdated
+            "dateUpdated": dateUpdated,
+            "heart": "open"
         };
 
         // get video array

@@ -4,15 +4,54 @@
     <link rel="stylesheet" href="popup.css">
   </head>
   <body>
-    <header>
-      <h1>Youtube Timestamp Bookmarker</h1>
-      <div class="menu-icons">
-        <img src="./images/settings.svg" alt="settings icon" id="settings">
+    <main>
+      <nav class="d-row nav-ctn">
+        <h1>YouTube Timestamp Bookmarker</h1>
+        <div class="menu-ctn">
+          <div class="hamburger-menu cursor">
+            <div class="line-1"></div>
+            <div class="line-2 line-open"></div>
+            <div class="line-3">
+            </div>
+          </div>
+        </div>
+      </nav>
+      <div id="settings" class="settings-ctn close-menu ">
+        <h2>Settings</h2>
+        <br>
+        <div class="color-theme-ctn setting-options d-row">
+          <p>Light Theme</p>
+          <input type="checkbox" id="toggle" class="checkbox" />
+          <label for="toggle" class="switch"></label>
+        </div>
+        <div class="date-format setting-options d-row">
+          <p>Export Bookmark</p>
+          <img src="./images/download.svg" class="cursor download-btn" alt="">
+        </div>
       </div>
-    </header>
-    <div id="video-list-ctn">
+      <div class="content">
+        <div class="filter-ctn d-row">
+          <input type="text" id="search-input" class="search-bar text-input" placeholder="Search for a video title.."
+            title="Search video titles">
+          <div class="date-filter-ctn">
+            <select name="video-updated-date" id="date-select-filter" class="select-date">
+              <option value="Newest" class="option-date">Newest</option>
+              <option value="Oldest" class="option-date">Oldest</option>
+            </select>
+            <select name="liked-videos-filter" id="likes-select-filter" class="select-date">
+              <option value="All" class="option-date">All</option>
+              <option value="Liked" class="option-date">Liked</option>
+            </select>
+          </div>
+        </div>
+        <br>
+        <div id="video-list-ctn">
+        </div>
+      </div>
+    </main>
+    <!-- <div id="video-list-ctn">
       <button class="remove-btn"></button>
-    </div>
+    </div> -->
     <script src="popup.js"></script>
   </body>
 </html>
