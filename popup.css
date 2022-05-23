@@ -284,16 +284,8 @@ span {
 }
 
 .line-2 {
-  width: 0.75rem;
+  width: 1.1rem;
   margin: 0.3rem 0rem;
-}
-
-.line-close {
-  margin-left: 0rem;
-}
-
-.line-open {
-  margin-left: 0.35rem;
 }
 
 
