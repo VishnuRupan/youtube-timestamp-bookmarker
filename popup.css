@@ -27,7 +27,8 @@ white -
   --font-color: #ffffff;
   --button-color: #bb86fc;
   --error-color: #cf6679;
-  --bg-lighter: rgb(175, 175, 175);
+  --bg-lighter: rgb(57, 57, 57);
+  --bg-placeholder: #c2c2c2;
   /* Width */
   --popup-width: 45rem;
   --card-width: 100%;
@@ -47,6 +48,8 @@ white -
   --font-color: #121212;
   --button-color: #bb86fc;
   --error-color: #b00020;
+  --bg-lighter: #eaeaea;
+  --bg-placeholder: #3a3a3a;
 }
 
 /*/////// HTML elements ///////*/
@@ -91,6 +94,7 @@ main {
   height: var(--popup-height);
   overflow-x: hidden;
   overflow-y: scroll;
+  background: var(--bg-color);
   position: relative;
 }
 
@@ -108,7 +112,7 @@ input {
 
 
 ::placeholder {
-  color: var(--bg-lighter);
+  color: var(--bg-placeholder);
 }
 
 
@@ -196,6 +200,8 @@ span {
   margin-left: 100%;
   position: fixed;
   margin-top: var(--nav-height);
+  background: var(--bg-light);
+  color: var(--font-color);
 }
 
 .icon-ctn {
@@ -356,7 +362,8 @@ span {
 }
 
 .setting-options {
-  border-bottom: 1px solid rgb(57, 57, 57);
+  border-top: 0.5px solid rgb(57, 57, 57);
+  border-color: var(--bg-lighter);
 }
 
 .setting-options>p {
@@ -381,6 +388,17 @@ span {
   margin-right: 1rem;
 }
 
+
+
+.clear-list>button {
+  background: var(--error-color);
+  color: white;
+  width: 100%;
+  height: 2rem;
+  border: none;
+  font-weight: bold;
+  border-radius: 5px;
+}
 
 
 main::-webkit-scrollbar {

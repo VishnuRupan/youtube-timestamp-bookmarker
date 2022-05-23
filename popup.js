@@ -6,7 +6,7 @@ var searchInput = document.getElementById("search-input");
 
 var likedVideoFilter = document.getElementById('likes-select-filter');
 var dateVideoFilter = document.getElementById('date-select-filter');
-
+var clearListBtn = document.getElementById('clear-list-btn');
 
 window.addEventListener('DOMContentLoaded', async function () {
 
@@ -24,6 +24,23 @@ window.addEventListener('DOMContentLoaded', async function () {
   searchInput.addEventListener('keyup', searchFilter);
   menuCtn.addEventListener('click', menuToggle);
   likedVideoFilter.addEventListener('click', videoLikesFilter);
+  dateVideoFilter.addEventListener('click', dateFilter);
+
+  const toggle = document.querySelector("#toggle");
+  toggle.addEventListener("click", function (item) {
+    console.log(item.target.checked);
+    var rootElement = document.body;
+
+
+    rootElement.classList.toggle("lightMode");
+
+  });
+
+
+  clearListBtn.addEventListener('click', function () {
+    if (confirm('Are you sure you want to clear your bookmark list?'))
+      chrome.storage.sync.clear();
+  });
 });
 
 
@@ -102,6 +119,7 @@ async function renderVideoBookmarkList(event, area) {
             </div>
         </div>
       </li>
+
     `;
 
   }
@@ -208,6 +226,24 @@ async function videoLikesFilter(item) {
 }
 
 
+async function dateFilter(item) {
+  let selectedOption = item.target.value;
+
+  let ul, li, dateTag;
+
+  ul = document.querySelector(".video-ul");
+  li = ul.querySelectorAll("li");
+
+  if (selectedOption === "Oldest") {
+    let videoArr = (await chrome.storage.sync.get("videoObj")).videoObj;
+
+    videoArr.sort((date1, date2) => Date.parse(date2.dateUpdated) - Date.parse(date1.dateUpdated));
+  } else {
+    videoArr.sort((date1, date2) => Date.parse(date1.dateUpdated) - Date.parse(date2.dateUpdated));
+  }
+}
+
+
 
 ///////////////////////////// UPDATES /////////////////////////////
 
@@ -215,14 +251,5 @@ async function videoLikesFilter(item) {
 
 
 dateVideoFilter.addEventListener("click", function () {
-  let selectedOption = dateVideoFilter.value;
-  let ul, li, dateTag;
 
-  ul = document.getElementById("video-ul");
-
-  li = ul.getElementsByTagName("li");
-
-  if (selectedOption === "Oldest") {
-
-  }
 });
