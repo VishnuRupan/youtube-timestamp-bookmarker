@@ -28,10 +28,7 @@ window.addEventListener('DOMContentLoaded', async function () {
 
   const toggle = document.querySelector("#toggle");
   toggle.addEventListener("click", function (item) {
-    console.log(item.target.checked);
     var rootElement = document.body;
-
-
     rootElement.classList.toggle("lightMode");
 
   });
@@ -229,27 +226,22 @@ async function videoLikesFilter(item) {
 async function dateFilter(item) {
   let selectedOption = item.target.value;
 
-  let ul, li, dateTag;
+  let ul, li;
 
   ul = document.querySelector(".video-ul");
   li = ul.querySelectorAll("li");
 
-  if (selectedOption === "Oldest") {
-    let videoArr = (await chrome.storage.sync.get("videoObj")).videoObj;
+  let videoArr = (await chrome.storage.sync.get("videoObj")).videoObj;
 
-    videoArr.sort((date1, date2) => Date.parse(date2.dateUpdated) - Date.parse(date1.dateUpdated));
-  } else {
-    videoArr.sort((date1, date2) => Date.parse(date1.dateUpdated) - Date.parse(date2.dateUpdated));
-  }
+  let result;
+  if (selectedOption === "Oldest")
+    result = videoArr.sort((date1, date2) => Date.parse(date1.dateUpdated) - Date.parse(date2.dateUpdated));
+  else
+    result = videoArr.sort((date1, date2) => Date.parse(date2.dateUpdated) - Date.parse(date1.dateUpdated));
+
+  await chrome.storage.sync.set({ "videoObj": result });
+  likedVideoFilter.value = "All";
+
 }
 
-
-
 ///////////////////////////// UPDATES /////////////////////////////
-
-
-
-
-dateVideoFilter.addEventListener("click", function () {
-
-});

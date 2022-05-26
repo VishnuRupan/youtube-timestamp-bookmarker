@@ -44,11 +44,11 @@ white -
 
 .lightMode {
   --bg-color: #ffffff;
-  --bg-light: #F8F8F8;
+  --bg-light: #e8e8e8;
   --font-color: #121212;
   --button-color: #bb86fc;
   --error-color: #b00020;
-  --bg-lighter: #eaeaea;
+  --bg-lighter: #a9a9a9;
   --bg-placeholder: #3a3a3a;
 }
 
@@ -193,7 +193,7 @@ span {
 
 .settings-ctn {
   width: 15rem;
-  height: 12.5rem;
+  height: 11rem;
   background: rgb(43, 43, 43);
   position: absolute;
   justify-content: flex-end;
