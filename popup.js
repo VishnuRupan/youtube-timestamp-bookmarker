@@ -7,10 +7,19 @@ var searchInput = document.getElementById("search-input");
 var likedVideoFilter = document.getElementById('likes-select-filter');
 var dateVideoFilter = document.getElementById('date-select-filter');
 var clearListBtn = document.getElementById('clear-list-btn');
+var rootElement = document.body;
+
 
 window.addEventListener('DOMContentLoaded', async function () {
 
   await renderVideoBookmarkList();
+
+  const toggle = document.querySelector("#toggle");
+
+  var setTheme = (await chrome.storage.sync.get("theme")).theme;
+  if (setTheme) rootElement.classList.toggle("lightMode");
+  toggle.checked = setTheme;
+
 
   [...document.querySelectorAll('.remove-btn')].forEach(function (item) {
     item.addEventListener('click', removeVideoFromList);
@@ -26,18 +35,19 @@ window.addEventListener('DOMContentLoaded', async function () {
   likedVideoFilter.addEventListener('click', videoLikesFilter);
   dateVideoFilter.addEventListener('click', dateFilter);
 
-  const toggle = document.querySelector("#toggle");
-  toggle.addEventListener("click", function (item) {
-    var rootElement = document.body;
-    rootElement.classList.toggle("lightMode");
-
+  toggle.addEventListener("click", async function (item) {
+    var themeToggle = rootElement.classList.toggle("lightMode");
+    await chrome.storage.sync.set({ "theme": themeToggle });
+    toggle.checked = themeToggle;
   });
 
 
-  clearListBtn.addEventListener('click', function () {
+  clearListBtn.addEventListener('click', async function () {
     if (confirm('Are you sure you want to clear your bookmark list?'))
-      chrome.storage.sync.clear();
+      await chrome.storage.sync.remove("videoObj");
   });
+
+
 });
 
 
