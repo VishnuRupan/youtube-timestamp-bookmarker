@@ -86,7 +86,9 @@ async function renderVideoBookmarkList(event, area) {
         <div class="card-ctn ctn" id="${video.url}">
             <div class="section-info d-row">
                 <div class="img-ctn ctn">
-                    <img src="${video.thumbnail}" alt="">
+                  <a href="${video.urlTimestamp}" target="_blank" class="cursor">
+                    <img src="${video.thumbnail}" alt="video thumbnail">
+                  </a>
                 </div>
                 <div class="info-ctn ctn d-column">
                     <a href="${video.urlTimestamp}" target="_blank" class="title-url cursor">

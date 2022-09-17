@@ -41,7 +41,6 @@ white -
   --border-rad: 5px;
 }
 
-
 .lightMode {
   --bg-color: #ffffff;
   --bg-light: #e8e8e8;
@@ -85,8 +84,7 @@ h2 {
 html {
   background: var(--bg-color);
   color: var(--font-color);
-  font-family: 'Mulish', sans-serif;
-
+  font-family: "Mulish", sans-serif;
 }
 
 main {
@@ -110,11 +108,9 @@ input {
   background: var(--bg-light);
 }
 
-
 ::placeholder {
   color: var(--bg-placeholder);
 }
-
 
 .content {
   padding: 1rem 0.5rem;
@@ -143,10 +139,6 @@ span {
 .d-none {
   display: none;
 }
-
-
-
-
 
 /*/////// Global Flex ///////*/
 
@@ -188,7 +180,6 @@ span {
 
 .video-details-ctn {
   padding: 1rem 0rem;
-
 }
 
 .settings-ctn {
@@ -217,14 +208,12 @@ span {
 
 .settings-ctn {
   padding: 1rem;
-
 }
 
 .setting-options {
   padding: 1rem 0rem;
   justify-content: space-between;
 }
-
 
 /*/////// General ///////*/
 
@@ -240,14 +229,14 @@ span {
   background: var(--bg-light);
 }
 
-.img-ctn>img {
+.img-ctn > a > img {
   width: 190px;
   height: 120px;
   object-fit: cover;
   border-radius: var(--border-rad);
 }
 
-.img-ctn>img:hover {
+.img-ctn > a > img:hover {
   transform: scale(1.05);
 }
 
@@ -256,24 +245,20 @@ span {
   padding-right: 2rem;
 }
 
-
-.icon-details>img {
+.icon-details > img {
   width: 0.8rem;
   height: 0.8rem;
 }
 
-
-.icon-details>span {
+.icon-details > span {
   padding-left: 0.5rem;
 }
 
-.heart>img,
-.trashcan>img,
-.input-ctn>img {
+.heart > img,
+.trashcan > img,
+.input-ctn > img {
   width: var(--icon-width);
 }
-
-
 
 .line-1,
 .line-3,
@@ -288,20 +273,15 @@ span {
   margin: 0.3rem 0rem;
 }
 
-
-
-
 .open-menu {
   transform: translate(-103.5%, 0);
-  transition: transform 0.5s cubic-bezier(0.77, 0.2, 0.05, 1.0);
+  transition: transform 0.5s cubic-bezier(0.77, 0.2, 0.05, 1);
 }
-
 
 .close-menu {
   transform: translate(100%, 0);
-  transition: transform 0.5s cubic-bezier(0.77, 0.2, 0.05, 1.0);
+  transition: transform 0.5s cubic-bezier(0.77, 0.2, 0.05, 1);
 }
-
 
 /* The switch - the box around the slider */
 .switch {
@@ -330,7 +310,7 @@ span {
 }
 
 .switch::after {
-  content: '';
+  content: "";
   position: absolute;
   width: 18px;
   height: 18px;
@@ -341,11 +321,11 @@ span {
   transition: all 0.3s;
 }
 
-.checkbox:checked+.switch::after {
+.checkbox:checked + .switch::after {
   left: 20px;
 }
 
-.checkbox:checked+.switch {
+.checkbox:checked + .switch {
   background-color: var(--button-color);
 }
 
@@ -358,7 +338,7 @@ span {
   border-color: var(--bg-lighter);
 }
 
-.setting-options>p {
+.setting-options > p {
   font-size: 0.8rem;
 }
 
@@ -370,9 +350,6 @@ span {
   width: 20rem;
 }
 
-
-
-
 .select-date,
 .option-date {
   background: var(--bg-color);
@@ -380,9 +357,7 @@ span {
   margin-right: 1rem;
 }
 
-
-
-.clear-list>button {
+.clear-list > button {
   background: var(--error-color);
   color: white;
   width: 100%;
@@ -391,7 +366,6 @@ span {
   font-weight: bold;
   border-radius: 5px;
 }
-
 
 main::-webkit-scrollbar {
   width: 8px;

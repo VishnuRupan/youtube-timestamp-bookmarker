@@ -5,24 +5,23 @@ document.addEventListener("yt-navigate-finish", function (event) {
 
 function run() {
     // get right video menu bar
-    const menuCtn = document.getElementById("menu-container");
-    const menuCtnSpan = menuCtn.querySelector("#top-level-buttons-computed");
+    const bookmarkCtn = document.createElement('div');
+    bookmarkCtn.classList.add('bookmark-ctn');
 
-    // create bookmark container
-    let bkmarkDiv = document.createElement('div');
-    bkmarkDiv.classList.add('yt-bookmark-container');
-
-    // insert image into bookmark container
-    let bkmarkImg = document.createElement('img');
+    const bkmarkImg = document.createElement('img');
     bkmarkImg.src = chrome.runtime.getURL("images/bookmark.svg");
-    bkmarkDiv.appendChild(bkmarkImg);
+    bkmarkImg.classList.add('bookmark-btn');
 
-    menuCtnSpan.appendChild(bkmarkDiv);
 
-    bkmarkDiv.addEventListener("click", async () => {
+    const youtubeLeftControls = document.getElementsByClassName("ytp-left-controls")[0];
+    bookmarkCtn.appendChild(bkmarkImg);
+    youtubeLeftControls.appendChild(bookmarkCtn);
+
+    bkmarkImg.addEventListener("click", async () => {
         setVideoTimestamp();
     });
 
+    
 
     async function setVideoTimestamp() {
         let currentTime = document.querySelector('.ytp-time-current').innerHTML;

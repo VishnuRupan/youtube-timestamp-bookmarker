@@ -1,7 +1,7 @@
 {
   "name": "Youtube Timestamp Bookmarker",
   "description": "Bookmark the timestamp of a YouTube video to watch later",
-  "version": "1.0",
+  "version": "2.0",
   "manifest_version": 3,
   "background": {
     "service_worker": "background.js"

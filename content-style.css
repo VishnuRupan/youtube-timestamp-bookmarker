@@ -1,20 +1,19 @@
-.yt-bookmark-container {
-    padding: 1rem;
-    padding-right: 0rem;
-    margin-right: -1rem;
-    cursor: pointer;
+.bookmark-ctn {
+  min-height: 100%;
+  margin-left: 1rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.bookmark-btn {
+  width: 25px;
+  height: 25px;
+  cursor: pointer;
+}
+.bookmark-btn:hover {
+  transform: scale(1.05);
 }
 
-.yt-bookmark-container>img {
-    object-fit: contain;
-    width: 25px;
-    height: 25px;
-}
-
-.yt-bookmark-container>img:hover {
-    transform: scale(1.05);
-}
-
-.yt-bookmark-container>img:active {
-    transform: scale(0.8);
+.bookmark-btn:active {
+  transform: scale(0.8);
 }
