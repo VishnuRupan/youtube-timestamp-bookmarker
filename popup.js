@@ -3,15 +3,14 @@ var iconCtn = document.querySelector(".icon-ctn");
 var menuCtn = document.querySelector(".menu-ctn");
 var settingsCtn = document.querySelector("#settings");
 var searchInput = document.getElementById("search-input");
+var addVideoTitleBtn = document.querySelectorAll(".add-video-title");
 
-var likedVideoFilter = document.getElementById('likes-select-filter');
-var dateVideoFilter = document.getElementById('date-select-filter');
-var clearListBtn = document.getElementById('clear-list-btn');
+var likedVideoFilter = document.getElementById("likes-select-filter");
+var dateVideoFilter = document.getElementById("date-select-filter");
+var clearListBtn = document.getElementById("clear-list-btn");
 var rootElement = document.body;
 
-
-window.addEventListener('DOMContentLoaded', async function () {
-
+window.addEventListener("DOMContentLoaded", async function () {
   await renderVideoBookmarkList();
 
   const toggle = document.querySelector("#toggle");
@@ -20,67 +19,63 @@ window.addEventListener('DOMContentLoaded', async function () {
   if (setTheme) rootElement.classList.toggle("lightMode");
   toggle.checked = setTheme;
 
-
-  [...document.querySelectorAll('.remove-btn')].forEach(function (item) {
-    item.addEventListener('click', removeVideoFromList);
+  [...document.querySelectorAll(".remove-btn")].forEach(function (item) {
+    item.addEventListener("click", removeVideoFromList);
   });
 
-
-  [...document.querySelectorAll('.heart-icon')].forEach(function (item) {
-    item.addEventListener('click', heartIconToggle);
+  [...document.querySelectorAll(".heart-icon")].forEach(function (item) {
+    item.addEventListener("click", heartIconToggle);
   });
 
-  searchInput.addEventListener('keyup', searchFilter);
-  menuCtn.addEventListener('click', menuToggle);
-  likedVideoFilter.addEventListener('click', videoLikesFilter);
-  dateVideoFilter.addEventListener('click', dateFilter);
+  [...document.querySelectorAll(".add-video-title")].forEach(function (item) {
+    item.addEventListener("click", updatedVideoTitle);
+  });
+
+  searchInput.addEventListener("keyup", searchFilter);
+  menuCtn.addEventListener("click", menuToggle);
+  likedVideoFilter.addEventListener("click", videoLikesFilter);
+  dateVideoFilter.addEventListener("click", dateFilter);
 
   toggle.addEventListener("click", async function (item) {
     var themeToggle = rootElement.classList.toggle("lightMode");
-    await chrome.storage.sync.set({ "theme": themeToggle });
+    await chrome.storage.sync.set({ theme: themeToggle });
     toggle.checked = themeToggle;
   });
 
-
-  clearListBtn.addEventListener('click', async function () {
-    if (confirm('Are you sure you want to clear your bookmark list?'))
+  clearListBtn.addEventListener("click", async function () {
+    if (confirm("Are you sure you want to clear your bookmark list?"))
       await chrome.storage.sync.remove("videoObj");
   });
-
-
 });
-
-
 
 chrome.storage.onChanged.addListener(async function () {
-
   await renderVideoBookmarkList();
 
-
-  [...document.querySelectorAll('.remove-btn')].forEach(function (item) {
-    item.addEventListener('click', removeVideoFromList);
+  [...document.querySelectorAll(".remove-btn")].forEach(function (item) {
+    item.addEventListener("click", removeVideoFromList);
   });
 
+  [...document.querySelectorAll(".heart-icon")].forEach(function (item) {
+    item.addEventListener("click", heartIconToggle);
+  });
 
-  [...document.querySelectorAll('.heart-icon')].forEach(function (item) {
-    item.addEventListener('click', heartIconToggle);
+  [...document.querySelectorAll(".add-video-title")].forEach(function (item) {
+    item.addEventListener("click", updatedVideoTitle);
   });
 });
 
-
 async function renderVideoBookmarkList(event, area) {
-  (document.querySelector('#video-list-ctn')).innerHTML = "";
+  document.querySelector("#video-list-ctn").innerHTML = "";
 
-  let bkmarkImg = document.createElement('img');
+  let bkmarkImg = document.createElement("img");
   bkmarkImg.src = chrome.runtime.getURL("images/bookmark.svg");
 
   let videoArr = await chrome.storage.sync.get("videoObj");
 
-  let ul = document.createElement('ul');
-  ul.className = 'video-ul';
+  let ul = document.createElement("ul");
+  ul.className = "video-ul";
 
   for (let video of videoArr.videoObj) {
-
     ul.innerHTML += ` 
         <li>
         <div class="card-ctn ctn" id="${video.url}">
@@ -105,9 +100,9 @@ async function renderVideoBookmarkList(event, area) {
                         </div>
                     </div>
                     <div class="input-ctn d-row">
-                        <input type="text" placeholder="bookmark a name"
+                        <input id="input-${video.url}" type="text" placeholder="bookmark a name"
                             class="bookmark-name text-input">
-                        <img class="icon cursor" src="./images/plus-button.svg" alt="">
+                        <img id="add-${video.url}" class="add-video-title icon cursor" src="./images/plus-button.svg" alt="">
                     </div>
                 </div>
             </div>
@@ -130,10 +125,9 @@ async function renderVideoBookmarkList(event, area) {
       </li>
 
     `;
-
   }
   //document.querySelector('#video-list-ctn').innerHTML = "";
-  document.querySelector('#video-list-ctn').appendChild(ul);
+  document.querySelector("#video-list-ctn").appendChild(ul);
 }
 
 async function removeVideoFromList(item) {
@@ -146,9 +140,25 @@ async function removeVideoFromList(item) {
       if (index > -1) {
         videoArr.splice(index, 1);
       }
-      await chrome.storage.sync.set({ "videoObj": videoArr });
+      await chrome.storage.sync.set({ videoObj: videoArr });
     }
   }
+}
+
+async function updatedVideoTitle(item) {
+  const idString = item.target.id.toString().substring(4);
+  const inputField = document.getElementById(`input-${idString}`);
+
+  let videoObject = await chrome.storage.sync.get("videoObj");
+  let videoArr = videoObject.videoObj;
+
+  let video = videoArr.find((vid) => {
+    return vid.url === idString;
+  });
+
+  video.title = inputField.value;
+
+  await chrome.storage.sync.set({ videoObj: videoArr });
 }
 
 async function heartIconToggle(item) {
@@ -173,12 +183,10 @@ async function heartIconToggle(item) {
     }
   });
 
-  await chrome.storage.sync.set({ "videoObj": videoArr });
-
+  await chrome.storage.sync.set({ videoObj: videoArr });
 }
 
 async function searchFilter() {
-
   let filter, ul, li, a, i, txtValue;
 
   filter = searchInput.value.toUpperCase();
@@ -188,20 +196,20 @@ async function searchFilter() {
   li = ul.querySelectorAll("li");
 
   for (i = 0; i < li.length; i++) {
-
     a = li[i].getElementsByTagName("a")[0];
 
-    if (!a.innerText || !a.textContent) txtValue = li[i].getElementsByTagName("h2")[0].getElementsByTagName("a")[0].textContent;
-    else txtValue = a.textContent || a.innerText;;
+    if (!a.innerText || !a.textContent)
+      txtValue = li[i]
+        .getElementsByTagName("h2")[0]
+        .getElementsByTagName("a")[0].textContent;
+    else txtValue = a.textContent || a.innerText;
 
     if (txtValue.toUpperCase().indexOf(filter) > -1) li[i].style.display = "";
     else li[i].style.display = "none";
   }
 }
 
-
 async function menuToggle() {
-
   if (settingsCtn.classList.contains("close-menu")) {
     settingsCtn.classList.add("open-menu");
     settingsCtn.classList.remove("close-menu");
@@ -212,7 +220,6 @@ async function menuToggle() {
 }
 
 async function videoLikesFilter(item) {
-
   let selectedOption = item.target.value;
   let ul, li, heartIcon;
 
@@ -220,20 +227,18 @@ async function videoLikesFilter(item) {
   li = ul.querySelectorAll("li");
 
   if (selectedOption === "Liked") {
-
     for (i = 0; i < li.length; i++) {
-      heartIcon = li[i].getElementsByClassName('heart-icon')[0];
+      heartIcon = li[i].getElementsByClassName("heart-icon")[0];
       if (heartIcon.classList.contains("close")) li[i].style.display = "";
       else li[i].style.display = "none";
     }
   } else {
     for (i = 0; i < li.length; i++) {
-      heartIcon = li[i].getElementsByClassName('heart-icon')[0];
+      heartIcon = li[i].getElementsByClassName("heart-icon")[0];
       li[i].style.display = "";
     }
   }
 }
-
 
 async function dateFilter(item) {
   let selectedOption = item.target.value;
@@ -247,13 +252,18 @@ async function dateFilter(item) {
 
   let result;
   if (selectedOption === "Oldest")
-    result = videoArr.sort((date1, date2) => Date.parse(date1.dateUpdated) - Date.parse(date2.dateUpdated));
+    result = videoArr.sort(
+      (date1, date2) =>
+        Date.parse(date1.dateUpdated) - Date.parse(date2.dateUpdated)
+    );
   else
-    result = videoArr.sort((date1, date2) => Date.parse(date2.dateUpdated) - Date.parse(date1.dateUpdated));
+    result = videoArr.sort(
+      (date1, date2) =>
+        Date.parse(date2.dateUpdated) - Date.parse(date1.dateUpdated)
+    );
 
-  await chrome.storage.sync.set({ "videoObj": result });
+  await chrome.storage.sync.set({ videoObj: result });
   likedVideoFilter.value = "All";
-
 }
 
 ///////////////////////////// UPDATES /////////////////////////////
