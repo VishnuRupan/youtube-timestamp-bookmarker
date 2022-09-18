@@ -19,3 +19,16 @@
   </p>
 </div>
 
+The idea for this extension to develop an easy way to bookmark the current timestamp of a YouTube video to pick back up exactly where you left off. Although this feature exists with YouTube's watch history, it can be buggy at times and requires you to enable your watch history to use this feature. My goal was to create a modern user interface that displayed only necessary details with the ability to sort and find bookmarked videos fast. 
+
+Hopefully you find this extension useful!
+
+
+## Features: 
+- Search bar
+- Update video titles
+- Sort by favorited videos and date
+- Light and dark mode toggle
+- Remove single or multiple videos from bookmark
+
+
