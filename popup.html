@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <link rel="stylesheet" href="popup.css">
+    <link rel="stylesheet" href="popup.css" />
   </head>
   <body>
     <main>
@@ -11,14 +11,13 @@
           <div class="hamburger-menu cursor">
             <div class="line-1"></div>
             <div class="line-2 line-open"></div>
-            <div class="line-3">
-            </div>
+            <div class="line-3"></div>
           </div>
         </div>
       </nav>
-      <div id="settings" class="settings-ctn close-menu ">
+      <div id="settings" class="settings-ctn close-menu">
         <h2>Settings</h2>
-        <br>
+        <br />
         <div class="color-theme-ctn setting-options d-row">
           <p>Light Theme</p>
           <input type="checkbox" id="toggle" class="checkbox front" />
@@ -30,22 +29,39 @@
       </div>
       <div class="content">
         <div class="filter-ctn d-row">
-          <input type="text" id="search-input" class="search-bar text-input" placeholder="Search for a video title.."
-            title="Search video titles">
+          <input
+            type="text"
+            id="search-input"
+            class="search-bar text-input"
+            placeholder="Search for a video title.."
+            title="Search video titles"
+          />
           <div class="date-filter-ctn">
-            <select name="video-updated-date" id="date-select-filter" class="select-date">
-              <option value="Newest" class="option-date" selected="selected">Newest</option>
+            <select
+              name="video-updated-date"
+              id="date-select-filter"
+              class="select-date"
+            >
+              <option value="Newest" class="option-date">Newest</option>
               <option value="Oldest" class="option-date">Oldest</option>
+              <option value="All Video" class="option-date" selected="selected">
+                All Videos
+              </option>
             </select>
-            <select name="liked-videos-filter" id="likes-select-filter" class="select-date">
-              <option value="All" class="option-date" selected="selected">All</option>
+            <select
+              name="liked-videos-filter"
+              id="likes-select-filter"
+              class="select-date"
+            >
+              <option value="All" class="option-date" selected="selected">
+                All
+              </option>
               <option value="Liked" class="option-date">Liked</option>
             </select>
           </div>
         </div>
-        <br>
-        <div id="video-list-ctn">
-        </div>
+        <br />
+        <div id="video-list-ctn"></div>
       </div>
     </main>
     <!-- <div id="video-list-ctn">

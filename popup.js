@@ -123,7 +123,6 @@ async function renderVideoBookmarkList(event, area) {
             </div>
         </div>
       </li>
-
     `;
   }
   //document.querySelector('#video-list-ctn').innerHTML = "";
