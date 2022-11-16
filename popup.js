@@ -94,10 +94,13 @@ async function renderVideoBookmarkList(event, area) {
                             <img class="icon calender" src="./images/calender-icon.svg" alt="">
                             <span>${video.dateUpdated}</span>
                         </div>
-                        <div class="icon-details">
-                            <img class="icon" src="./images/clock.svg" alt="">
+
+                       <div class="icon-details d-row">
+                            <img class="icon clock" src="./images/clock.svg" alt="">
                             <span>${video.timeStamp} / ${video.videoLength}</span>
                         </div>
+
+              
                     </div>
                     <div class="input-ctn d-row">
                         <input id="input-${video.url}" type="text" placeholder="bookmark a name"

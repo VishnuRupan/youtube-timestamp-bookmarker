@@ -244,6 +244,9 @@ span {
 .icon-details {
   padding-right: 2rem;
 }
+.clock {
+  margin-top: 2px;
+}
 
 .icon-details > img {
   width: 0.8rem;
